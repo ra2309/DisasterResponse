@@ -1,5 +1,14 @@
 # Disaster Response Pipeline Project
-
+### Objective:
+The project analyzes collection of tweets and determine what kind of disaster is involved.
+### Files:
+The project contains three folders:
+- app
+contains Flask server and plotly to plot the graphs
+- data
+contains data and process_data.py which is an ETL pipleine in addition to resulting database
+- models
+contains train_classifier.py which is an ML pipeline and resulting pkl file from model
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
