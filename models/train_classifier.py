@@ -12,7 +12,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer,TfidfTransformer
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report,accuracy_score
 from sklearn.model_selection import GridSearchCV
 import pickle
 
@@ -74,6 +74,9 @@ def evaluate_model(model, X_test, Y_test, category_names):
         print(category_names[i])
         score = classification_report(Y_test.T[i],y_preds.T[i])
         print(score)
+        acc_score = accuracy_score(Y_test.T[i],y_preds.T[i])
+        print("Accuracy score")
+        print(acc_score)
 
 
 def save_model(model, model_filepath):
