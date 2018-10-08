@@ -15,7 +15,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 import pickle
+
 def load_data(database_filepath):
+    """
+    Input: database file location
+    Output: X, Y and column names
+    """
+    
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table(database_filepath,con=engine)
     X = df['message'].values
@@ -24,6 +30,11 @@ def load_data(database_filepath):
     return X,Y,categories
 
 def tokenize(text):
+    """
+    Input: text
+    Output: tokenized text
+    Procedure: the algorithm uses NLTK library to tokenize and clean text
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
     clean_tokens = []
@@ -34,6 +45,12 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Output: GridSearch pipeline
+    Procedure: the pipeline contains countvectorizer, TF-IDF transformer, and multioutput decission tree
+               the parameters are different sets of values for countvectorizer and TF-IDF transformer
+               GridSearchCV runs on both variables to find optimal parameters
+    """
     pipeline = Pipeline([
     ('vect',CountVectorizer(tokenizer=tokenize)),
     ('tfdif',TfidfTransformer()),
@@ -48,6 +65,10 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Input: model, X_test, Y_test, column names
+    Output: printout of recall, prcession, and accuracy of model
+    """
     y_preds = model.predict(X_test)
     for i in range(len(y_preds.T)):
         print(category_names[i])
@@ -56,10 +77,17 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Input: model and model filepath
+    Output: pkl file saved in model filepath
+    """
     pickle.dump(model,open(model_filepath, 'wb'))
 
 
 def main():
+    """
+    Run the procedures of loading, building model, evaluating, and dumping model
+    """
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
