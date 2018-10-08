@@ -1,4 +1,7 @@
 # Disaster Response Pipeline Project
+# By Rakan Alkheliwi
+### Link:
+https://github.com/ra2309/DisasterResponse
 ### Objective:
 The project analyzes collection of tweets and determine what kind of disaster is involved.
 ### Files:

@@ -15,6 +15,11 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
+    """
+    Input: text
+    Output: cleaned and tokenized text
+    Procedure: uses NLTK library to tokenize, lemmatize and clean text
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -37,9 +42,10 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
-    
+    """
+    Procedure: runs on initation by initalizing variables for genres, and disasters graphs. Then, it create plotly graphs for both data sets
+    """
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     disaster_col = df.drop(['genre','message','original','id','related'],axis=1).columns
@@ -102,6 +108,9 @@ def index():
 # web page that handles user query and displays model results
 @app.route('/go')
 def go():
+    """
+    Procedure: waits for a query from user with message. Then, it states what kind of disaster is this on the next page 'go'
+    """
     # save user input in query
     query = request.args.get('query', '') 
 
@@ -118,6 +127,9 @@ def go():
 
 
 def main():
+    """
+    Runs server
+    """
     app.run(host='0.0.0.0', port=3001, debug=True)
 
 
